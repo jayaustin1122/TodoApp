@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
     }
     private fun view() {
         dao.get().addValueEventListener(object: ValueEventListener {
@@ -67,6 +68,20 @@ class MainActivity : AppCompatActivity() {
                     var employee = Task(title,desc,currentDate,currentTime)
                     list.add(employee)
                 }
+                adapter.onItemClick = {
+
+                    Toast.makeText(applicationContext, "itemclicked!", Toast.LENGTH_SHORT).show()
+                }
+                adapter.onDeleteButtonClick = { item:Task , position:Int ->
+                    Toast.makeText(applicationContext, "delete button!", Toast.LENGTH_SHORT).show()
+
+                }
+                adapter.onUpdateButtonClick = { item:Task , position:Int ->
+                    Toast.makeText(applicationContext, "update button!", Toast.LENGTH_SHORT).show()
+                }
+
+
+
                 adapter = TaskAdapter(list)
                 binding.myRecyclerView.adapter = TaskAdapter(list)
                 binding.myRecyclerView.adapter = adapter
@@ -109,7 +124,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnAdd2.setOnClickListener() {
             if(binding.etAddTitle.length() >=1 && binding.etAddDescription.length()>=1 ) {
                 dao.add(Task(
-                    binding.etAddTitle.text.toString(),
+                    binding.etAddTitle.text.toString().capitalize(),
                     binding.etAddDescription.text.toString(),
                     currentDate1,
                     currentTime))
